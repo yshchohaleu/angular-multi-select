@@ -514,7 +514,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
             // refresh button label
             $scope.refreshButton = function() {
 
-                $scope.varButtonLabel   = '';                
+                $scope.varButtonLabel   = $scope.lang.nothingSelected;
                 var ctr                 = 0;                  
 
                 // refresh button label...
@@ -538,7 +538,9 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                     
                     angular.forEach( $scope.inputModel, function( value, key ) {
                         if ( typeof value !== 'undefined' && value[ attrs.tickProperty ] === true ) {                        
-                            if ( ctr < tempMaxLabels ) {                            
+                            if (ctr < tempMaxLabels) {
+                                $scope.varButtonLabel = $scope.varButtonLabel.toString();
+				$scope.varButtonLabel = $scope.varButtonLabel.replace($scope.lang.nothingSelected, '');
                                 $scope.varButtonLabel += ( $scope.varButtonLabel.length > 0 ? '</div>, <div class="buttonLabel">' : '<div class="buttonLabel">') + $scope.writeLabel( value, 'buttonLabel' );
                             }
                             ctr++;
@@ -553,7 +555,8 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                         $scope.varButtonLabel += '(' + $scope.outputModel.length + ')';                        
                     }
                 }
-                $scope.varButtonLabel = $sce.trustAsHtml( $scope.varButtonLabel + '<span class="caret"></span>' );                
+                
+                $scope.varButtonLabel = $sce.trustAsHtml($scope.varButtonLabel + '');
             }
 
             // Check if a checkbox is disabled or enabled. It will check the granular control (disableProperty) and global control (isDisabled)
